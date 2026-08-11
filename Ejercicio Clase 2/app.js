@@ -1,64 +1,78 @@
-const express= require("express");
+const express = require('express');
 const app = express();
 const PORT = 3000;
 
-//Libros
-const libros = [
-    {
-        id: 1,
-        titulo: "Cien años de soledad",
-        autor: "Gabriel García Márquez",
-        genero: "Realismo mágico",
-        anioPublicacion: 1967
-    },
-    {
-        id: 2,
-        titulo: "1984",
-        autor: "George Orwell",
-        genero: "Distopía",
-        anioPublicacion: 1949
-    },
-    {
-        id: 3,
-        titulo: "El principito",
-        autor: "Antoine de Saint-Exupéry",
-        genero: "Fantasía",
-        anioPublicacion: 1943
-    },
-    {
-        id: 4,
-        titulo: "Don Quijote de la Mancha",
-        autor: "Miguel de Cervantes",
-        genero: "Novela",
-        anioPublicacion: 1605
-    },
-    {
-        id: 5,
-        titulo: "Harry Potter y la piedra filosofal",
-        autor: "J. K. Rowling",
-        genero: "Fantasía",
-        anioPublicacion: 1997
+const fs = require('fs');
+
+app.use(express.json());
+
+function obtenerProductos() {
+    const data = fs.readFileSync('productos.json', 'utf8');
+    return JSON.parse(data);
+}
+
+function registrarProductos(productos) {
+    fs.writeFileSync('productos.json', JSON.stringify(productos, null, 2),);
+}
+
+app.get('/productos', (req, res) => {
+    let productos = obtenerProductos();
+    res.status(200).json({ status: 200, message: "exito", data: productos })
+});
+
+app.post('/productos', (req, res) => {
+    const producto = req.body;
+    let productos = obtenerProductos();
+    productos.push(producto);
+
+    registrarProductos(productos);
+
+    res.status(200).json({ status: 200, message: "exito", data: producto })
+})
+
+app.put('/productos', (req, res) => {
+    const actproducto = req.body;
+    let productos = obtenerProductos();
+
+    let existe = false;
+    productos.forEach(producto => {
+        if (actproducto.id === producto.id) {
+            existe = true;
+
+            producto.nombre = actproducto.nombre;
+            producto.marca = actproducto.marca
+            producto.fabricante - actproducto.fabricante;
+            producto.categoria = actproducto.categoria;
+
+        }
+    });
+    if (!existe) {
+        return res.status(404).json({ status: 404, message: "No existe el producto" });
     }
-];
+    registrarProductos(productos);
 
-//lectura de todos los libros
-app.get("/api/books", (req, res)=> {
-    res.send(libros);
-});
+    return res.status(200).json({ status: 200, message: "Exito, producto actualizado", data: cproducto });
+})
 
 
-//lectura mediante el # de ID
-app.get("/api/books/:id", (req, res)=> {
-    const id= parseInt(req.params.id);
-    const libro = libros.find((libro)=> libro.id === id);
+app.delete('/productos/:id', (req, res) => {
+    const id = req.params.id;
+    let delproductos = obtenerProductos();
 
-    if(!libro){
-      return res.status(404).json({status:404, message:"Libro no encontrado"});
+    const filtroProducto = delproductos.filter(producto => String(producto.id) !== String(id));
+
+
+    if (filtroProducto.length !== delproductos.length) {
+        delproductos = filtroProducto;
+        res.status(200).json({ status: 200, message: "Exito, producto eliminado" });
+
+        registrarProductos(delproductos);
     }
-    res.status(200).json({status:200, message: `El libro encontrado es: ${libro.titulo}`});
+    else {
+        res.status(404).json({ status: 404, message: "No existe el producto" })
+    }
 });
 
-
-app.listen(PORT,()=>{
-    console.log(`Servidor en puerto http://localhost:${PORT}`);
-});
+app.listen(PORT, () => {
+    console.log(`el servidor escucha en http://localhost:${PORT}`);
+})

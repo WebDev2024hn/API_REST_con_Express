@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nombre": "Latitude",
+    "marca": "DELL",
+    "fabricante": "Dell",
+    "categoria": "laptop"
+  },
+  {
+    "id": 2,
+    "nombre": "Macbook",
+    "marca": "Apple",
+    "fabricante": "apple",
+    "categoria": "laptop"
+  },
+  {
+    "id": 3,
+    "nombre": "Pavilion",
+    "marca": "HP",
+    "fabricante": "HP",
+    "categoria": "laptop"
+  }
+]
