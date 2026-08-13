@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "nombre": "MacBook Pro M4",
+    "marca": "Apple",
+    "fabricante": "Apple",
+    "categoria": "laptop"
+  },
+  {
+    "id": 2,
+    "nombre": "Latitude E5511",
+    "marca": "Dell",
+    "fabricante": "Dell",
+    "categoria": "laptop"
+  },
+  {
+    "id": 3,
+    "nombre": "ThinkPad E14",
+    "marca": "Lenovo",
+    "fabricante": "Lenovo",
+    "categoria": "laptop"
+  },
+  {
+    "id": 4,
+    "nombre": "Galaxy S25",
+    "marca": "Samsung",
+    "fabricante": "Samsung",
+    "categoria": "smartphone"
+  },
+  {
+    "id": 5,
+    "nombre": "iPhone 16",
+    "marca": "Apple",
+    "fabricante": "Apple",
+    "categoria": "smartphone"
+  },
+  {
+    "id": 6,
+    "nombre": "ROG Strix G16",
+    "marca": "ASUS",
+    "fabricante": "ASUS",
+    "categoria": "laptop"
+  }
+]
