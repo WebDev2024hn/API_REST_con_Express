@@ -1,0 +1,12 @@
+[
+    {
+        "id": 101,
+        "nombre": "Logitech",
+        "pais": "Suiza"
+    },
+    {
+        "id": 102,
+        "nombre": "Samsung",
+        "pais": "Corea del Sur"
+    }
+]
